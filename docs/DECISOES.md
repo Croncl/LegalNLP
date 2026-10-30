@@ -26,13 +26,13 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Substituída por:** o modelo vem da variável `LLM_MODEL` (padrão `jurema-7b`); o notebook usa `LLMLocal()`.
 
 ## D-04 Jurema-7B via GGUF Q4_K_M comunitário
-- **Status:** A validar
+- **Status:** Aceita (confirmada pelo autor em 30/10/2026)
 - **Decisão:** `ollama pull hf.co/mauroneto/Jurema-7B-Q4_K_M-GGUF`.
 - **Alternativa:** quantizar o original `Jurema-br/Jurema-7B` com llama.cpp (exige ~16 GB livres e mais etapas).
 - **Motivo:** menor esforço e mesmo modelo-base (ajuste do Qwen2.5-7B-Instruct para direito brasileiro).
 - **Riscos:** a conversão **não é oficial** e o conteúdo do repositório não foi auditado. O modelo original exige aceite de termos e é destinado a pesquisa e desenvolvimento.
 - **Mitigação:** citar modelo e autor da conversão no README; registrar que o uso é acadêmico; comparar com `qwen2.5:3b`.
-- **Confirmação do autor:** ______ (data)
+- **Confirmação do autor:** 30/10/2026
 
 ## D-05 Apelido `jurema-7b` via `ollama cp`
 - **Status:** Aceita
@@ -51,18 +51,28 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Motivo:** Streamlit executa arquivos `.py`; LangGraph, servidores MCP e testes exigem código importável; o README precisa ser reproduzível.
 - **Estrutura:** `src/cgu_rag/` (núcleo), `src/cgu_rag/agente/` (grafo), `mcp_servers/`, `skills/`, `app/`, `scripts/`, `notebooks/`, `tests/`, `docs/`.
 
-## D-08 Metodologia de avaliação da recuperação
-- **Status:** A validar
-- **Decisão:** gabarito **sintético** de 30 perguntas (LLM local escreve a pergunta a partir de uma seção sorteada, semente 42); acerto **estrito** (mesmo documento, mesma seção, páginas sobrepostas); métricas hit@1/3/5/10 e MRR@10; cada medição gravada em `results/progresso.json`.
-- **Limite:** perguntas sintéticas favorecem a busca lexical; revisar manualmente e, se possível, usar o benchmark original.
-- **Alternativa:** gabarito 100% manual (mais confiável, mais trabalhoso).
-- **Confirmação do autor:** ______ (data)
+## D-08 Metodologia de avaliacao da recuperacao (gabarito com validacao humana)
+- **Status:** Aceita (decisao do autor em 30/10/2026; substitui a versao com gabarito sintetico automatico)
+- **Decisao:** o gabarito tem **validacao manual**. Fluxo:
+  1. O sistema gera um **rascunho** de perguntas candidatas (LLM local, a partir de secoes sorteadas, semente 42) em `data/gabarito/rascunho.jsonl`, todas com `status: pendente`.
+  2. O autor revisa cada item: **aprova**, **edita a pergunta** ou **descarta**.
+  3. Somente itens `aprovado` entram em `data/gabarito/perguntas.jsonl`, com o campo `fase` (admissibilidade, acusatoria, julgamento, TAC).
+- **Metricas:** hit@1/3/5/10 e MRR@10; acerto **estrito** (mesmo documento, mesma secao, paginas sobrepostas); cada medicao em `results/progresso.json`.
+- **Motivo:** a revisao humana torna o processo mais confiavel e reduz o vies de perguntas sinteticas, que repetem termos do trecho e favorecem a busca lexical.
+- **Custo:** mais trabalho manual; meta minima de 30 perguntas aprovadas.
+- **Implementacao:** passo R3.
 
-## D-09 Domínio e corpus
-- **Status:** A validar (com a dupla)
-- **Decisão:** correição e processo administrativo disciplinar; 6 PDFs públicos da Base de Conhecimento da CGU (links em `src/cgu_rag/fontes.py`, a criar).
-- **Motivo:** corpus real e público, já ingerido (1567 trechos), com o baseline pronto.
-- **Confirmação da dupla:** ______ (data)
+## D-09 Dominio: processo disciplinar da CGU, organizado por fases
+- **Status:** Aceita pelo autor em 30/10/2026; **a confirmar com a dupla**
+- **Decisao:** o assistente cobre o processo disciplinar em tres fases, com o TAC como possibilidade em todas:
+  1. **Admissibilidade:** busca elementos minimos de materialidade e autoria para instaurar o PAD. Em regra nao ha contraditorio. Pode ser uma investigacao preliminar sumaria (IPS) ou apenas a elaboracao do juizo de admissibilidade. Principio: *in dubio pro societate*.
+  2. **Acusatoria (PAD / sindicancia acusatoria, comissao constituida):** o "acusado" (termo da lei) e chamado ao processo e pode se manifestar. Principio: *in dubio pro reu*.
+  3. **Julgamento / parecer opinativo:** apos a conclusao do PAD, com relatorio final da comissao e recomendacao (arquivamento ou penalidade).
+  - **TAC (Termo de Ajustamento de Conduta):** possivel em todas as fases, conforme normativo tipico da CGU.
+- **Corpus:** 6 PDFs publicos da Base de Conhecimento da CGU (1567 trechos ja ingeridos).
+- **Motivo:** alinha o assistente ao raciocinio real do corregedor: cada fase tem objetivo, nivel de prova e principio diferentes.
+- **Pendente (nao decidido):** como usar as fases no sistema (metadado `fase` nos trechos e no gabarito, skills e guardrails por fase). Sera proposto como decisao propria.
+- **Confirmacao da dupla:** ______ (data)
 
 ## D-10 Política de sigilo com falha fechada
 - **Status:** Aceita

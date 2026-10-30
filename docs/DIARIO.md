@@ -14,3 +14,4 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | 9 Resposta | `NameError: responder` e `con` | Kernel reiniciado; variáveis perdidas | Célula 1b "Retomada" no notebook |
 | 30/10 | 10 Avaliação | hit@k = 0 com 1 pergunta | Gabarito era só o texto-modelo | Gabarito sintético de 30 perguntas (D-08) |
 | 30/10 | Notebook | Notebook anterior gravava saídas com caminho local do Windows | , | Saídas limpas antes de commitar |
+| 30/10 | Decisoes | D-04 confirmada; D-08 (gabarito com validacao humana) e D-09 (dominio por fases) registradas | , | Documentos atualizados pelo script R1b |
