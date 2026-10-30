@@ -1,4 +1,4 @@
-# Registro de Decisões (ADR simplificado)
+﻿# Registro de Decisões (ADR simplificado)
 
 Projeto: assistente agêntico sobre normativos da CGU (correição e processo disciplinar).
 Disciplina: IA Agêntica, Avaliação da Unidade II. Dupla: *(preencher os dois nomes)*.
@@ -80,8 +80,9 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Motivo:** o domínio é administrativo e pode envolver dados sensíveis; o corpus atual é público, mas a política evita vazamento por engano.
 
 ## D-12 Estrutura do repositorio
-- **Status:** A validar
+- **Status:** Aceita (confirmada pelo autor em 30/10/2026)
 - **Decisao:** uma pasta por responsabilidade: `src/cgu_rag/` (nucleo e, depois, `agente/`), `mcp_servers/`, `skills/`, `app/`, `scripts/`, `notebooks/`, `tests/`, `docs/`, `data/` e `results/`. Scripts de configuracao ficam na raiz.
 - **Fora do Git:** `.env`, bancos `.db`, PDFs, `.vscode/`, modelos e saidas de notebook.
 - **Motivo:** o codigo que o Streamlit chama fica so em `src/`; nada local ou sigiloso vai para o repositorio publico.
-- **Confirmacao do autor:** ______ (data)
+- **Confirmacao do autor:** 30/10/2026
+
