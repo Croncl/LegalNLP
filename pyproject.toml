@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cgu-rag"
+version = "0.1.0"
+description = "RAG sobre documentos da CGU e normativos, com LLM local (baseline modular)"
+requires-python = ">=3.10"
+dependencies = [
+    "pymupdf",
+    "numpy",
+    "requests",
+    "sentence-transformers",
+    "openai>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+notebook = ["jupyter", "ipykernel"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 110

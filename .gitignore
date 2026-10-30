@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+*.db
+*.egg-info/
+.ipynb_checkpoints/
+data/pdfs/*
+!data/pdfs/.gitkeep
+results/*
+!results/.gitkeep
+models/
