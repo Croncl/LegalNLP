@@ -78,3 +78,10 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Status:** Aceita
 - **Decisão:** com `SIGILO=sigiloso`, só endpoint local ou de rede privada; sem fallback para provedor externo.
 - **Motivo:** o domínio é administrativo e pode envolver dados sensíveis; o corpus atual é público, mas a política evita vazamento por engano.
+
+## D-12 Estrutura do repositorio
+- **Status:** A validar
+- **Decisao:** uma pasta por responsabilidade: `src/cgu_rag/` (nucleo e, depois, `agente/`), `mcp_servers/`, `skills/`, `app/`, `scripts/`, `notebooks/`, `tests/`, `docs/`, `data/` e `results/`. Scripts de configuracao ficam na raiz.
+- **Fora do Git:** `.env`, bancos `.db`, PDFs, `.vscode/`, modelos e saidas de notebook.
+- **Motivo:** o codigo que o Streamlit chama fica so em `src/`; nada local ou sigiloso vai para o repositorio publico.
+- **Confirmacao do autor:** ______ (data)

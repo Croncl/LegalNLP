@@ -16,3 +16,4 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | Notebook | Notebook anterior gravava saídas com caminho local do Windows | , | Saídas limpas antes de commitar |
 | 30/10 | Decisoes | D-04 confirmada; D-08 (gabarito com validacao humana) e D-09 (dominio por fases) registradas | , | Documentos atualizados pelo script R1b |
 | 30/10 | R2 | Ingestao movida do notebook para src/cgu_rag/ingestao.py e scripts/ingerir.py | , | Mesmo comportamento; data/pdfs/ funciona como cache |
+| 30/10 | R2c | Repositorio com .vscode e Untitled.ipynb versionados; gabarito sintetico e notebook com saidas modificados | , | Itens removidos do Git; gabarito movido para rascunho.jsonl; saidas do notebook limpas |

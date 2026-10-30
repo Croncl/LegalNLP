@@ -1,11 +1,11 @@
-# Roteiro de implantação
+﻿# Roteiro de implantação
 
 **Regra de trabalho:** um passo por vez. Cada passo tem: comando de terminal que altera os arquivos, teste de aceite, commit e registro no diário. Decisões marcadas `A validar` precisam de confirmação do autor antes de seguir.
 
 | # | Passo | Teste de aceite | Status |
 |---|---|---|---|
-| R1 | Documentação base (`docs/`) | Três arquivos existem e abrem | em andamento |
-| R2 | Módulo de ingestão: `fontes.py` e `scripts/ingerir.py` | `python scripts/ingerir.py` termina sem erro e reconhece os 6 PDFs | pendente |
+| R1 | Documentação base (`docs/`) | Três arquivos existem e abrem | concluído |
+| R2 | Módulo de ingestão: `fontes.py` e `scripts/ingerir.py` | `python scripts/ingerir.py` termina sem erro e reconhece os 6 PDFs | concluído |
 | R3 | Módulo de métricas e gráficos (`metricas.py`, `scripts/avaliar.py`) e gabarito com revisão humana (`scripts/gabarito.py`) | Gera `results/progresso.json` e os PNG | pendente |
 | R4 | Notebook fino (só chama os módulos) | Roda do início ao fim sem erro | pendente |
 | R5 | Experimento A3 de embeddings (D-06) | hit@k e MRR de A1, A2 e A3 no gráfico | pendente |
@@ -23,3 +23,4 @@
 - Um commit por passo, com mensagem clara; saídas de notebook limpas.
 - Cada medição vira linha em `results/progresso.json`.
 - Toda decisão relevante entra em `DECISOES.md`; todo erro entra em `DIARIO.md`.
+
