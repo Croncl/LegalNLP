@@ -56,22 +56,25 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Decisao:** o gabarito tem **validacao manual**. Fluxo:
   1. O sistema gera um **rascunho** de perguntas candidatas (LLM local, a partir de secoes sorteadas, semente 42) em `data/gabarito/rascunho.jsonl`, todas com `status: pendente`.
   2. O autor revisa cada item: **aprova**, **edita a pergunta** ou **descarta**.
-  3. Somente itens `aprovado` entram em `data/gabarito/perguntas.jsonl`, com o campo `fase` (admissibilidade, acusatoria, julgamento, TAC).
+  3. Somente itens `aprovado` entram em `data/gabarito/perguntas.jsonl`, com o campo `fase` (admissibilidade, acusatoria ou julgamento; ver D-11).
 - **Metricas:** hit@1/3/5/10 e MRR@10; acerto **estrito** (mesmo documento, mesma secao, paginas sobrepostas); cada medicao em `results/progresso.json`.
 - **Motivo:** a revisao humana torna o processo mais confiavel e reduz o vies de perguntas sinteticas, que repetem termos do trecho e favorecem a busca lexical.
 - **Custo:** mais trabalho manual; meta minima de 30 perguntas aprovadas.
 - **Implementacao:** passo R3.
 
-## D-09 Dominio: processo disciplinar da CGU, organizado por fases
-- **Status:** Aceita pelo autor em 30/10/2026; **a confirmar com a dupla**
-- **Decisao:** o assistente cobre o processo disciplinar em tres fases, com o TAC como possibilidade em todas:
-  1. **Admissibilidade:** busca elementos minimos de materialidade e autoria para instaurar o PAD. Em regra nao ha contraditorio. Pode ser uma investigacao preliminar sumaria (IPS) ou apenas a elaboracao do juizo de admissibilidade. Principio: *in dubio pro societate*.
-  2. **Acusatoria (PAD / sindicancia acusatoria, comissao constituida):** o "acusado" (termo da lei) e chamado ao processo e pode se manifestar. Principio: *in dubio pro reu*.
-  3. **Julgamento / parecer opinativo:** apos a conclusao do PAD, com relatorio final da comissao e recomendacao (arquivamento ou penalidade).
-  - **TAC (Termo de Ajustamento de Conduta):** possivel em todas as fases, conforme normativo tipico da CGU.
+## D-09 Dominio: processo disciplinar (PAD) e de responsabilizacao (PAR) da CGU
+- **Status:** Aceita pelo autor em 30/10/2026 (ampliada com o PAR); **a confirmar com a dupla**
+- **Decisao:** o assistente cobre dois processos distintos:
+  1. **PAD (processo disciplinar)**, em tres fases:
+     - **Admissibilidade:** busca elementos minimos de materialidade e autoria para instaurar o PAD. Em regra nao ha contraditorio. Pode ser uma investigacao preliminar sumaria (IPS) ou apenas o juizo de admissibilidade. Principio: *in dubio pro societate*.
+     - **Acusatoria (PAD / sindicancia acusatoria, comissao constituida):** o "acusado" (termo da lei) e chamado ao processo e pode se manifestar. Principio: *in dubio pro reu*.
+     - **Julgamento / parecer opinativo:** apos a conclusao do PAD, com relatorio final da comissao e recomendacao (arquivamento ou penalidade).
+  2. **PAR (Processo Administrativo de Responsabilizacao):** apura a responsabilidade objetiva de pessoas juridicas por atos lesivos contra a administracao publica nacional ou estrangeira (Lei 12.846/2013; no ambito federal, regulamentado pelo Decreto 11.129/2022, segundo a descricao do autor). Rito proprio: apuracao preliminar quando necessaria (IP ou IPS), instauracao por portaria com comissao processante, citacao e instrucao com contraditorio e ampla defesa, relatorio final e julgamento. Entre as sancoes: multa de 0,1% a 20% do faturamento bruto e publicacao extraordinaria da decisao; programas de integridade pesam na dosimetria.
+  - O PAR e tratado como categoria **separada** do PAD e nao usa as fases do PAD.
+  - **TAC (Termo de Ajustamento de Conduta):** encaminhamento possivel, como o arquivamento, conforme normativo tipico da CGU. Nao e fase.
 - **Corpus:** 6 PDFs publicos da Base de Conhecimento da CGU (1567 trechos ja ingeridos).
-- **Motivo:** alinha o assistente ao raciocinio real do corregedor: cada fase tem objetivo, nivel de prova e principio diferentes.
-- **Pendente (nao decidido):** como usar as fases no sistema (metadado `fase` nos trechos e no gabarito, skills e guardrails por fase). Sera proposto como decisao propria.
+- **Motivo:** o corpus contem documentos de PAD e de PAR, que seguem ritos diferentes.
+- **Pendente (nao decidido):** como usar a separacao no sistema (skills, guardrails, filtro de busca).
 - **Confirmacao da dupla:** ______ (data)
 
 ## D-10 Política de sigilo com falha fechada
@@ -86,3 +89,15 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Motivo:** o codigo que o Streamlit chama fica so em `src/`; nada local ou sigiloso vai para o repositorio publico.
 - **Confirmacao do autor:** 30/10/2026
 
+## D-11 Campo `fase` no gabarito (multisselecao, com PAR)
+- **Status:** Aceita (autor, 30/10/2026: opcao A, ampliada com a categoria PAR)
+- **Decisao:** cada pergunta aprovada tem `fase`, obrigatoria, com um destes formatos:
+  - lista com uma ou mais fases do PAD: `admissibilidade`, `acusatoria`, `julgamento` (as tres juntas = transversal; nao existe valor `geral`);
+  - `par` (valor exclusivo): pergunta sobre o processo de responsabilizacao;
+  - `fora_do_fluxo` (valor exclusivo): pergunta que nao e etapa de processo (ex.: efeitos da penalidade, como o impedimento apos a demissao).
+- **Teclas na revisao:** `1`, `2`, `3` (combinaveis, ex.: `13`), `4` = PAR, `0` = fora do fluxo.
+- **TAC nao e fase:** e um possivel encaminhamento; a pergunta recebe as fases em que se aplica.
+- **Metricas:** pergunta de varias fases conta em cada uma; `par` e `fora_do_fluxo` aparecem separados.
+- **Limite:** pergunta valida para PAD e PAR ao mesmo tempo nao tem categoria propria.
+- **Skills:** nao mudam; serao definidas no R10 por tarefa de varias etapas.
+- **Alternativas descartadas:** tres fases unicas (B) e dois campos, fase e tema (C). Campo `processo` separado (para PAD e PAR) fica como evolucao possivel.

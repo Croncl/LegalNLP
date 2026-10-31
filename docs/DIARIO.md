@@ -17,3 +17,7 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | Decisoes | D-04 confirmada; D-08 (gabarito com validacao humana) e D-09 (dominio por fases) registradas | , | Documentos atualizados pelo script R1b |
 | 30/10 | R2 | Ingestao movida do notebook para src/cgu_rag/ingestao.py e scripts/ingerir.py | , | Mesmo comportamento; data/pdfs/ funciona como cache |
 | 30/10 | R2c | Repositorio com .vscode e Untitled.ipynb versionados; gabarito sintetico e notebook com saidas modificados | , | Itens removidos do Git; gabarito movido para rascunho.jsonl; saidas do notebook limpas |
+| 30/10 | R3a | Revisao humana do gabarito (D-08) com campo fase (D-11) | , | Criados src/cgu_rag/gabarito.py, scripts/gabarito.py e tests/test_gabarito.py |
+| 30/10 | R3a | Campo fase virou multisselecao + fora_do_fluxo | As tres fases nao cobrem todas as perguntas | D-11 revisada (opcao A); modulo, tela e testes ajustados |
+| 30/10 | R3a | Campo fase virou multisselecao + fora_do_fluxo | As tres fases nao cobrem todas as perguntas | D-11 revisada (opcao A); modulo, tela e testes ajustados |
+| 30/10 | R3a | Corpus tem documentos de PAR (outro rito); revisao do gabarito zerada | Fases do PAD nao se aplicam ao PAR | Categoria exclusiva par (D-11) e D-09 ampliada; backup em ~/rascunho_revisado_backup.jsonl |
