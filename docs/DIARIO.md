@@ -23,3 +23,4 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | R3a | Corpus tem documentos de PAR (outro rito); revisao do gabarito zerada | Fases do PAD nao se aplicam ao PAR | Categoria exclusiva par (D-11) e D-09 ampliada; backup em ~/rascunho_revisado_backup.jsonl |
 | 30/10 | R3b | Metricas e graficos movidos para src/cgu_rag/metricas.py e scripts/avaliar.py | , | matplotlib adicionado ao pyproject; resultados em results/progresso.json e results/*.png |
 | 30/10 | R3b | Metricas e graficos movidos para src/cgu_rag/metricas.py e scripts/avaliar.py | , | matplotlib adicionado ao pyproject; resultados em results/progresso.json e results/*.png |
+| 30/10 | R3b | pyproject.toml invalido apos Set-Content -Encoding UTF8; matplotlib nao entrou na lista de dependencias | PowerShell 5.1 grava BOM e o TOML nao aceita | Regravado sem BOM (WriteAllText); dependencia adicionada; usar gravacao sem BOM em TOML e JSON |
