@@ -101,3 +101,17 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Limite:** pergunta valida para PAD e PAR ao mesmo tempo nao tem categoria propria.
 - **Skills:** nao mudam; serao definidas no R10 por tarefa de varias etapas.
 - **Alternativas descartadas:** tres fases unicas (B) e dois campos, fase e tema (C). Campo `processo` separado (para PAD e PAR) fica como evolucao possivel.
+
+## D-13 Prioridade: agente antes de otimizar a recuperacao
+- **Status:** Aceita (autor, 30/10/2026, opcao 1)
+- **Decisao:** seguir para o agente (R6 em diante); o notebook fino (R4) e o experimento com bge-m3 (R5) ficam adiados.
+- **Motivo:** os requisitos da Unidade II sao do agente; o baseline ja e bom (hit@5 = 0.93, hit@10 = 0.97).
+- **Risco:** a ordenacao fraca (hit@1 = 0.5) pode afetar as respostas; a rebusca do RAG agentico (R7) deve mitigar e o R5 pode ser retomado.
+
+## D-14 Grafo: estado simples, LLM via LLMLocal e checkpointer em memoria
+- **Status:** A validar
+- **Decisao:** estado com `messages` (lista de dicts, reducer de soma), `bloqueado`, `ferramentas` e `skills` (os dois ultimos para a interface exibir por resposta). LLM injetado (`LLMLocal`), sem LangChain. Checkpointer `MemorySaver`, uma thread por conversa. Ao LLM vai so o historico recente (10 mensagens); o estado guarda tudo.
+- **Motivo:** grafo proprio, como o requisito pede; estado transparente e serializavel; preserva a politica de sigilo (D-10); testes sem Ollama; o contexto do modelo local e limitado (num_ctx 4096).
+- **Alternativas:** `create_agent` ou `langchain-openai` (menos controle sobre os nos); `SqliteSaver` (persiste entre execucoes; avaliar se a interface exigir).
+- **Em aberto:** como o modelo decide consultar a base (tool calling nativo ou JSON estruturado). A testar no R7: o GGUF comunitario do Jurema pode nao suportar tool calling.
+- **Confirmacao do autor:** ______ (data)
