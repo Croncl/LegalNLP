@@ -6,7 +6,7 @@
 |---|---|---|---|
 | R1 | Documentação base (`docs/`) | Três arquivos existem e abrem | concluído |
 | R2 | Módulo de ingestão: `fontes.py` e `scripts/ingerir.py` | `python scripts/ingerir.py` termina sem erro e reconhece os 6 PDFs | concluído |
-| R3 | Módulo de métricas e gráficos (`metricas.py`, `scripts/avaliar.py`) e gabarito com revisão humana (`scripts/gabarito.py`) | Gera `results/progresso.json` e os PNG | em andamento (falta revisar o gabarito) |
+| R3 | Módulo de métricas e gráficos (`metricas.py`, `scripts/avaliar.py`) e gabarito com revisão humana (`scripts/gabarito.py`) | Gera `results/progresso.json` e os PNG | concluído |
 | R4 | Notebook fino (só chama os módulos) | Roda do início ao fim sem erro | pendente |
 | R5 | Experimento A3 de embeddings (D-06) | hit@k e MRR de A1, A2 e A3 no gráfico | pendente |
 | R6 | Grafo LangGraph mínimo com checkpointer | Duas perguntas na mesma thread, a segunda usa a primeira | pendente |
@@ -23,5 +23,6 @@
 - Um commit por passo, com mensagem clara; saídas de notebook limpas.
 - Cada medição vira linha em `results/progresso.json`.
 - Toda decisão relevante entra em `DECISOES.md`; todo erro entra em `DIARIO.md`.
+
 
 
