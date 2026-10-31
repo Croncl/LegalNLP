@@ -21,3 +21,5 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | R3a | Campo fase virou multisselecao + fora_do_fluxo | As tres fases nao cobrem todas as perguntas | D-11 revisada (opcao A); modulo, tela e testes ajustados |
 | 30/10 | R3a | Campo fase virou multisselecao + fora_do_fluxo | As tres fases nao cobrem todas as perguntas | D-11 revisada (opcao A); modulo, tela e testes ajustados |
 | 30/10 | R3a | Corpus tem documentos de PAR (outro rito); revisao do gabarito zerada | Fases do PAD nao se aplicam ao PAR | Categoria exclusiva par (D-11) e D-09 ampliada; backup em ~/rascunho_revisado_backup.jsonl |
+| 30/10 | R3b | Metricas e graficos movidos para src/cgu_rag/metricas.py e scripts/avaliar.py | , | matplotlib adicionado ao pyproject; resultados em results/progresso.json e results/*.png |
+| 30/10 | R3b | Metricas e graficos movidos para src/cgu_rag/metricas.py e scripts/avaliar.py | , | matplotlib adicionado ao pyproject; resultados em results/progresso.json e results/*.png |

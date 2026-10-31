@@ -13,6 +13,7 @@ dependencies = [
     "requests",
     "sentence-transformers",
     "openai>=1.0",
+    "matplotlib"
 ]
 
 [project.optional-dependencies]
@@ -28,3 +29,5 @@ pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 110
+
+
