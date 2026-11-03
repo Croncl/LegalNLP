@@ -108,10 +108,9 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Motivo:** os requisitos da Unidade II sao do agente; o baseline ja e bom (hit@5 = 0.93, hit@10 = 0.97).
 - **Risco:** a ordenacao fraca (hit@1 = 0.5) pode afetar as respostas; a rebusca do RAG agentico (R7) deve mitigar e o R5 pode ser retomado.
 
-## D-14 Grafo: estado simples, LLM via LLMLocal e checkpointer em memoria
-- **Status:** A validar
-- **Decisao:** estado com `messages` (lista de dicts, reducer de soma), `bloqueado`, `ferramentas` e `skills` (os dois ultimos para a interface exibir por resposta). LLM injetado (`LLMLocal`), sem LangChain. Checkpointer `MemorySaver`, uma thread por conversa. Ao LLM vai so o historico recente (10 mensagens); o estado guarda tudo.
-- **Motivo:** grafo proprio, como o requisito pede; estado transparente e serializavel; preserva a politica de sigilo (D-10); testes sem Ollama; o contexto do modelo local e limitado (num_ctx 4096).
-- **Alternativas:** `create_agent` ou `langchain-openai` (menos controle sobre os nos); `SqliteSaver` (persiste entre execucoes; avaliar se a interface exigir).
-- **Em aberto:** como o modelo decide consultar a base (tool calling nativo ou JSON estruturado). A testar no R7: o GGUF comunitario do Jurema pode nao suportar tool calling.
-- **Confirmacao do autor:** ______ (data)
+## D-14 Grafo proprio com pecas padrao do LangChain
+- **Status:** Aceita (autor, 30/10/2026, opcao B)
+- **Decisao:** grafo `StateGraph` definido pela dupla (estado, nos e arestas). Estado: `messages` (mensagens do LangChain, reducer `add_messages`), `bloqueado`, `ferramentas` e `skills` (os dois ultimos para a interface exibir por resposta). Modelo: `ChatOpenAI` apontado para o Ollama (`/v1`), criado por `criar_modelo()`, que mantem a politica de sigilo (D-10). Ferramentas: `bind_tools` e `ToolNode`. MCP: `langchain-mcp-adapters`. Checkpointer `MemorySaver`, uma thread por conversa. Ao modelo vai so o historico recente (10 mensagens, sempre comecando por mensagem do usuario); o estado guarda tudo.
+- **Motivo:** o requisito pede grafo proprio, nao apenas `create_agent`; os adaptadores de MCP e o `ToolNode` evitam codigo manual; a interface le `tool_calls` e `ToolMessage` direto das mensagens; e o ecossistema usado na unidade.
+- **Alternativas:** manter dicts e `LLMLocal` (versao inicial do R6); `create_agent` (nao basta para o requisito); `SqliteSaver` (persiste entre execucoes; avaliar se a interface exigir).
+- **Risco:** o tool calling depende do template do modelo no Ollama; verificar com `scripts/testar_tools.py` antes do R7.

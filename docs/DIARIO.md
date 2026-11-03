@@ -26,3 +26,5 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | R3b | pyproject.toml invalido apos Set-Content -Encoding UTF8; matplotlib nao entrou na lista de dependencias | PowerShell 5.1 grava BOM e o TOML nao aceita | Regravado sem BOM (WriteAllText); dependencia adicionada; usar gravacao sem BOM em TOML e JSON |
 | 30/10 | R3c | Baseline oficial medido (30 perguntas revisadas): A1 hit@5 0.867, A2 hit@5 0.933 | , | Resultados em docs/RESULTADOS.md; graficos em docs/img/ |
 | 30/10 | R6 | Grafo LangGraph minimo (entrada, responder, saida) com checkpointer por thread | , | src/cgu_rag/agente/grafo.py, scripts/chat.py, tests/test_grafo.py; langgraph no pyproject |
+| 30/10 | R6b | Grafo migrado para mensagens e ChatOpenAI do LangChain (D-14 opcao B); criado teste de tool calling | , | modelo.py, grafo.py, testar_tools.py; langchain-openai no pyproject |
+| 30/10 | R6b | Grafo migrado para mensagens e ChatOpenAI do LangChain (D-14 opcao B); criado teste de tool calling | , | modelo.py, grafo.py, testar_tools.py; langchain-openai no pyproject |
