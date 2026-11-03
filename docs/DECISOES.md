@@ -1,7 +1,7 @@
 ﻿# Registro de Decisões (ADR simplificado)
 
 Projeto: assistente agêntico sobre normativos da CGU (correição e processo disciplinar).
-Disciplina: IA Agêntica, Avaliação da Unidade II. Dupla: *(preencher os dois nomes)*.
+Disciplina: IA Agêntica, Avaliação da Unidade II. Dupla:
 
 **Como usar:** uma decisão por bloco. Status possíveis: `Aceita`, `A validar`, `Substituída`.
 Decisões `A validar` só viram `Aceita` depois da confirmação explícita do autor (anotar a data).
@@ -114,3 +114,12 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Motivo:** o requisito pede grafo proprio, nao apenas `create_agent`; os adaptadores de MCP e o `ToolNode` evitam codigo manual; a interface le `tool_calls` e `ToolMessage` direto das mensagens; e o ecossistema usado na unidade.
 - **Alternativas:** manter dicts e `LLMLocal` (versao inicial do R6); `create_agent` (nao basta para o requisito); `SqliteSaver` (persiste entre execucoes; avaliar se a interface exigir).
 - **Risco:** o tool calling depende do template do modelo no Ollama; verificar com `scripts/testar_tools.py` antes do R7.
+
+## D-15 RAG agentico: o modelo decide, reformula e rebusca
+- **Status:** A validar
+- **Decisao:** o modelo (Jurema-7B, que aceitou tool calling no teste de 30/10/2026: chamou na pergunta sobre prazo e nao chamou na saudacao) tem a ferramenta `consultar_base` (BM25 + vetores com RRF; 4 trechos de ate 900 caracteres). O prompt manda consultar antes de responder perguntas normativas, reformular e consultar de novo se os trechos nao bastarem, e citar `[documento, pags X-Y]`. Limite de 3 consultas por turno; depois o modelo e obrigado a responder sem ferramenta.
+- **Historico:** nos turnos anteriores so pergunta e resposta final vao ao modelo (sem resultados de consulta), para caber no contexto; o turno atual fica completo. As ferramentas chamadas no turno ficam no estado, para a interface exibir.
+- **Motivo:** atende o requisito (o modelo decide quando consultar, reformula e rebusca) e limita tempo e contexto no CPU; o limite evita laco infinito.
+- **Alternativas:** sempre consultar (nao e agentico); decisao por JSON no prompt (desnecessaria, pois o modelo aceita tool calling); reranker ou reescrita de consulta dedicada (evolucao futura).
+- **Riscos:** o modelo pode nao consultar quando deveria, ou rebuscar sem reformular de verdade (medir nos casos de teste, R13); o `num_ctx` do Ollama pode truncar o prompt.
+- **Confirmacao do autor:** ______ (data)

@@ -10,7 +10,7 @@
 | R4 | Notebook fino (só chama os módulos) | Roda do início ao fim sem erro | adiado (D-13) |
 | R5 | Experimento A3 de embeddings (D-06) | hit@k e MRR de A1, A2 e A3 no gráfico | adiado (D-13) |
 | R6 | Grafo LangGraph mínimo com checkpointer | Duas perguntas na mesma thread, a segunda usa a primeira | concluído |
-| R7 | RAG agêntico (decide consultar, reformula, rebusca; informa a fonte) | Pergunta vaga é reformulada e rebuscada | pendente |
+| R7 | RAG agêntico (decide consultar, reformula, rebusca; informa a fonte) | Pergunta vaga é reformulada e rebuscada | em andamento |
 | R8 | Servidor MCP próprio (`mcp_servers/`) | Ferramentas listadas e chamadas pelo grafo | pendente |
 | R9 | Servidor MCP da comunidade | Ferramenta chamada pelo grafo | pendente |
 | R10 | Duas skills (`skills/*/SKILL.md`) com catálogo no prompt | Skill carregada sob demanda e exibida | pendente |
@@ -23,6 +23,7 @@
 - Um commit por passo, com mensagem clara; saídas de notebook limpas.
 - Cada medição vira linha em `results/progresso.json`.
 - Toda decisão relevante entra em `DECISOES.md`; todo erro entra em `DIARIO.md`.
+
 
 
 

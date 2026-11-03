@@ -62,13 +62,14 @@ def test_historico_enviado_e_limitado_mas_o_estado_guarda_tudo():
     assert len(estado["messages"]) == 8            # 4 perguntas + 4 respostas guardadas
 
 
-def test_recentes_nao_comeca_por_resposta_de_ferramenta():
-    msgs = [HumanMessage("a"),
-            AIMessage("", tool_calls=[{"name": "f", "args": {}, "id": "1"}]),
-            ToolMessage("r", tool_call_id="1"), AIMessage("ok"), HumanMessage("b")]
-    assert [m.type for m in recentes(msgs, 3)] == ["human"]
-    assert [m.type for m in recentes(msgs, 4)] == ["human"]
-    assert recentes(msgs, 5)[0].content == "a"
+def test_recentes_tira_ferramentas_de_turnos_anteriores_e_mantem_o_turno_atual():
+    antigo = [HumanMessage("a"), AIMessage("", tool_calls=[{"name": "f", "args": {}, "id": "1"}]),
+              ToolMessage("r", tool_call_id="1"), AIMessage("ok")]
+    atual = [HumanMessage("b"), AIMessage("", tool_calls=[{"name": "f", "args": {}, "id": "2"}]),
+             ToolMessage("r2", tool_call_id="2")]
+    assert [m.type for m in recentes(antigo + atual, 10)] == ["human", "ai", "human", "ai", "tool"]
+    assert [m.content for m in recentes(antigo + atual, 3)] == ["b", "", "r2"]  # turno atual nunca e cortado
+    assert recentes(antigo + atual, 1)[0].content == "b"
 
 
 def test_ferramentas_e_skills_zeradas_a_cada_turno():

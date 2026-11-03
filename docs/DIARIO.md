@@ -28,3 +28,4 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | R6 | Grafo LangGraph minimo (entrada, responder, saida) com checkpointer por thread | , | src/cgu_rag/agente/grafo.py, scripts/chat.py, tests/test_grafo.py; langgraph no pyproject |
 | 30/10 | R6b | Grafo migrado para mensagens e ChatOpenAI do LangChain (D-14 opcao B); criado teste de tool calling | , | modelo.py, grafo.py, testar_tools.py; langchain-openai no pyproject |
 | 30/10 | R6b | Grafo migrado para mensagens e ChatOpenAI do LangChain (D-14 opcao B); criado teste de tool calling | , | modelo.py, grafo.py, testar_tools.py; langchain-openai no pyproject |
+| 30/10 | R7 | Jurema-7B aceita tool calling (testar_tools.py); RAG agentico implementado no grafo (consultar_base, reformulacao, limite de 3 consultas) | , | ferramentas.py, grafo.py, chat.py; D-15 |
