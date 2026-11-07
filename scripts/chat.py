@@ -9,15 +9,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from cgu_rag.agente.ferramentas import criar_ferramenta_consulta  # noqa: E402
+from cgu_rag.agente.ferramentas import criar_buscador, criar_ferramenta_consulta  # noqa: E402
 from cgu_rag.agente.grafo import conversar, criar_grafo  # noqa: E402
 from cgu_rag.agente.modelo import criar_modelo  # noqa: E402
-from cgu_rag.busca import abrir_db, buscar  # noqa: E402
 
 
 def main():
-    con = abrir_db()
-    consulta = criar_ferramenta_consulta(lambda q, k: [r for _, r in buscar(con, q, k, True)])
+    consulta = criar_ferramenta_consulta(criar_buscador())
     grafo = criar_grafo(criar_modelo(), ferramentas=[consulta])
     thread = uuid.uuid4().hex[:8]
     print(f"Conversa {thread}. Comandos: /nova, /sair")

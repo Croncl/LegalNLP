@@ -1,6 +1,8 @@
+import sqlite3
+
 from langchain_core.messages import AIMessage, ToolMessage
 
-from cgu_rag.agente.ferramentas import criar_ferramenta_consulta, formatar_trechos
+from cgu_rag.agente.ferramentas import criar_buscador, criar_ferramenta_consulta, formatar_trechos
 from cgu_rag.agente.grafo import conversar, criar_grafo
 
 
@@ -89,3 +91,35 @@ def test_ferramentas_do_turno_nao_vazam_para_o_proximo_e_o_historico_fica_enxuto
     enviado = modelo.com[-1]
     assert not any(isinstance(m, ToolMessage) for m in enviado)           # resultado antigo nao volta ao contexto
     assert [m.content for m in enviado if m.type in ("human", "ai")] == ["primeira", "resposta 1", "segunda"]
+
+
+def _banco(tmp_path):
+    db = tmp_path / "t.db"
+    c = sqlite3.connect(db)
+    c.execute("create table t(x)")
+    c.execute("insert into t values('achei')")
+    c.commit()
+    c.close()
+    return db
+
+
+def _busca(con, consulta, k, denso):
+    return [(1.0, linha(texto=con.execute("select x from t").fetchone()[0]))]
+
+
+def test_buscador_por_thread_funciona_dentro_do_toolnode(tmp_path):
+    db = _banco(tmp_path)
+    modelo = ModeloRoteirizado([chamada("q"), AIMessage("final")])
+    buscador = criar_buscador(abrir=lambda: sqlite3.connect(db), buscar_fn=_busca)
+    g = criar_grafo(modelo, ferramentas=[criar_ferramenta_consulta(buscador)])
+    resposta, _ = conversar(g, "pergunta", "t1")
+    assert resposta == "final" and "achei" in modelo.com[1][-1].content
+
+
+def test_conexao_da_thread_principal_falha_no_toolnode_e_o_erro_vai_ao_modelo(tmp_path):
+    """Documenta o defeito encontrado no R7: o ToolNode usa outra thread."""
+    con = sqlite3.connect(_banco(tmp_path))
+    modelo = ModeloRoteirizado([chamada("q"), AIMessage("final")])
+    g = criar_grafo(modelo, ferramentas=[criar_ferramenta_consulta(lambda q, k: [r for _, r in _busca(con, q, k, True)])])
+    conversar(g, "pergunta", "t1")
+    assert "ProgrammingError" in modelo.com[1][-1].content  # o erro chega ao modelo como mensagem de ferramenta

@@ -3,6 +3,7 @@
 Uso (na raiz do projeto, com o Ollama rodando):
   python scripts/testar_tools.py                  # testa o modelo de LLM_MODEL (jurema-7b)
   python scripts/testar_tools.py --modelo qwen2.5:3b
+  $env:LLM_PENSAR="false"; python scripts/testar_tools.py --modelo qwen3.8:27b   (desliga o raciocinio)
 Resultado esperado de um modelo bom: chama a ferramenta na 1a pergunta e NAO chama na 2a.
 """
 import argparse
@@ -45,7 +46,8 @@ def main() -> int:
             print("Provavel causa: o modelo nao tem template de ferramentas no Ollama (ver D-14).")
             return 1
         chamou = [c["name"] for c in r.tool_calls]
-        print(f"[{esperado}] chamou={chamou or 'nenhuma'} | {time.time() - t0:.0f}s | texto={str(r.content)[:70]!r}")
+        tokens = (r.usage_metadata or {}).get("output_tokens", "?")  # muitos tokens numa resposta curta = raciocinio ligado
+        print(f"[{esperado}] chamou={chamou or 'nenhuma'} | {time.time() - t0:.0f}s | tokens={tokens} | texto={str(r.content)[:70]!r}")
     return 0
 
 
