@@ -1,4 +1,4 @@
-# Resumo para iniciar um novo chat: LegalNLP / RAG CGU (Unidade II, IA Agêntica)
+﻿# Resumo para iniciar um novo chat: LegalNLP / RAG CGU (Unidade II, IA Agêntica)
 
 Atualizado em 07/11/2026. Cole este arquivo no início do novo chat. Repositório: https://github.com/Croncl/LegalNLP (branch main). Pasta local: `C:\Users\k12_crslcrn\Documents\Projetos\cgu_rag_projeto`. Windows, PowerShell 5.1, ambiente conda `cgu-rag` (Python 3.11), Ollama 0.40.15. PC principal: Ryzen 7, 48 GB de RAM, sem GPU relevante (inferência em CPU); notebook secundário com RTX 4050.
 
@@ -76,7 +76,7 @@ Limites: n=8 (intervalos de confiança se sobrepõem); "acerto" mede se a consul
 ## 8. Modelos (Ollama 0.40.15; contexto 8192 via `OLLAMA_CONTEXT_LENGTH`; `OLLAMA_MAX_LOADED_MODELS=1`)
 Instalados em 07/11/2026: `qwen2.5:3b`, `qwen2.5:7b` (+ `-instruct-q5_K_M`, `-instruct-q8_0`), `qwen2.5:14b` (Q4_K_M, 9 GB), `qwen3.8:27b-q4_k_m` (17 GB; mesmo ID do antigo `qwen3.8:27b`), `SparkLLM/Spark-X2.6-4B:q8_0` (oficial, 4,4 GB, tools+thinking, contexto máx. 1.048.576), `spark-x2.6-4b:q4_k_m` (3,5 GB, **criado por Modelfile a partir de GGUF local em `C:\Modelos\OllamaGGUF`; procedência a registrar**), `hf.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB:Q4_K_M` (oficial NVIDIA, 6,2 GB).
 Modelo padrão provisório (`config.py`): `SparkLLM/Spark-X2.6-4B:q8_0`. Removidos e justificados em `docs/MODELOS.md`: Jurema (0% de consulta), Spark BF16, aliases. Descartados: AWQ e FP8 (formatos de GPU, não rodam no Ollama em CPU), quantização manual do 27B (já é Q4_K_M; o llama.cpp local build 4400 não reconhece a arquitetura `qwen35`; não existe "Qwen2.5 27B").
-Limpeza pendente em `C:\Modelos`: pasta `Nemotron` (pesos safetensors originais, incompletos e inúteis para o Ollama), `Modelfile`, `Modelfile-Q4`, `Modelfile-Q5` (da tentativa de quantizar o 27B), `MAPA_LOCAL_MODELOS.md` (desatualizado). Manter `OllamaGGUF\spark-x2.6-4b-q4_k_m.gguf` e `Modelfile-Spark` como registro até a procedência ser anotada.
+Em `C:\Modelos`: pasta `Nemotron` (pesos originais em BF16, 16 GB, download em andamento em 07/11/2026; NAO apagar: servem para quantizações próprias do Nemotron se ele for finalista), `Modelfile`, `Modelfile-Q4`, `Modelfile-Q5` (da tentativa de quantizar o 27B), `MAPA_LOCAL_MODELOS.md` (desatualizado). Manter `OllamaGGUF\spark-x2.6-4b-q4_k_m.gguf` e `Modelfile-Spark` como registro até a procedência ser anotada.
 
 ## 9. Plano de escolha do modelo (D-17)
 Princípios: mudar uma variável por vez; um modelo carregado por vez; critérios escritos antes de ver resultados; só modelos oficiais (nada "abliterated"); registrar tag, digest, quantização, contexto, raciocínio ligado/desligado e commit.
@@ -101,3 +101,4 @@ $modelos = @("qwen2.5:3b", "qwen2.5:7b", "qwen2.5:14b", "SparkLLM/Spark-X2.6-4B:
 } | Tee-Object -FilePath results\triagem_modelos.txt
 ```
 Ler a **segunda linha** de cada modelo (a primeira inclui a carga): chamou na 1ª pergunta e não na 2ª? tokens baixos com o raciocínio desligado? tempo (alerta acima de 60 s)? erros? Depois: entregar o **script de medição v2** (fase 1), medir n=30 nos aprovados, avaliar qualidade com rubrica, decidir D-17 e seguir para R8 em diante.
+
