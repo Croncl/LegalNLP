@@ -116,7 +116,7 @@ def criar_grafo(modelo, max_msgs: int = MAX_MSGS, checkpointer=None, ferramentas
     g.add_edge(START, "entrada")
     g.add_conditional_edges("entrada", rota_entrada, {"responder": "responder", "saida": "saida"})
     if ferramentas:
-        g.add_node("ferramentas", ToolNode(ferramentas))
+        g.add_node("ferramentas", ToolNode(ferramentas, handle_tool_errors=True))
         g.add_conditional_edges("responder", rota_responder, {"ferramentas": "ferramentas", "saida": "saida"})
         g.add_edge("ferramentas", "responder")
     else:

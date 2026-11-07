@@ -26,7 +26,7 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Substituída por:** o modelo vem da variável `LLM_MODEL` (padrão `jurema-7b`); o notebook usa `LLMLocal()`.
 
 ## D-04 Jurema-7B via GGUF Q4_K_M comunitário
-- **Status:** Aceita (confirmada pelo autor em 30/10/2026)
+- **Status:** Substituida em 05/11/2026 (nao usa ferramentas no grafo; modelo removido; ver D-17 e docs/MODELOS.md)
 - **Decisão:** `ollama pull hf.co/mauroneto/Jurema-7B-Q4_K_M-GGUF`.
 - **Alternativa:** quantizar o original `Jurema-br/Jurema-7B` com llama.cpp (exige ~16 GB livres e mais etapas).
 - **Motivo:** menor esforço e mesmo modelo-base (ajuste do Qwen2.5-7B-Instruct para direito brasileiro).
@@ -123,3 +123,12 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Alternativas:** sempre consultar (nao e agentico); decisao por JSON no prompt (desnecessaria, pois o modelo aceita tool calling); reranker ou reescrita de consulta dedicada (evolucao futura).
 - **Riscos:** o modelo pode nao consultar quando deveria, ou rebuscar sem reformular de verdade (medir nos casos de teste, R13); o `num_ctx` do Ollama pode truncar o prompt.
 - **Confirmacao do autor:** ______ (data)
+
+## D-17 Escolha do modelo principal do agente (em andamento)
+- **Status:** A validar (sem decisao; depende dos testes das fases 1 a 5)
+- **Contexto:** o Jurema-7B nao usa a ferramenta de consulta no grafo (D-04 substituida). No benchmark preliminar (n = 8, docs/RESULTADOS.md): Spark-X2.6-4B Q8_0 e Qwen 27B Q4_K_M consultaram em 100% das perguntas; Qwen2.5-3B em 75%.
+- **Candidatos:** Spark-X2.6-4B Q8_0 (ponto de partida), NVIDIA Nemotron 3.5 Bolt E4B, Qwen2.5-3B, Qwen2.5-7B e Qwen3.8-27B Q4_K_M (referencia). Fora: Qwen3.8-27B FP8 (exige GPU e outro servidor) e Jurema (removido; ver docs/MODELOS.md).
+- **Criterios (proposta, a validar):** eliminatorios: consulta em pelo menos 90% de 30 perguntas normativas; no maximo 1 saudacao consultada em 4; zero citacao de pagina sem consulta; no maximo 1 erro por rodada; mediana ate 60 s por pergunta. Desempate, nesta ordem: qualidade da resposta (rubrica manual), acerto na consulta, latencia, memoria.
+- **Metodologia:** mesmos documentos, trechos, prompts, parametros (temperatura 0,1) e gabarito; um modelo carregado por vez; aquecimento antes de cronometrar; tag, digest, quantizacao e contexto registrados; n = 30 nos finalistas.
+- **Confirmacao do autor:** ______ (data)
+
