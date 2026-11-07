@@ -132,3 +132,4 @@ Decisões `A validar` só viram `Aceita` depois da confirmação explícita do a
 - **Metodologia:** mesmos documentos, trechos, prompts, parametros (temperatura 0,1) e gabarito; um modelo carregado por vez; aquecimento antes de cronometrar; tag, digest, quantizacao e contexto registrados; n = 30 nos finalistas.
 - **Confirmacao do autor:** ______ (data)
 
+- **Quantizacao (etapa B):** so depois de escolher o modelo, comparar Q4_K_M, Q5_K_M e Q8_0 do(s) vencedor(es), apenas com tags oficiais disponiveis (ex.: qwen2.5:7b-instruct-q5_K_M e -q8_0; o Nemotron oficial so tem Q4_K_M), mudando uma variavel por vez.

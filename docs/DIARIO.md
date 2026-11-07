@@ -35,3 +35,4 @@ Uma linha por ocorrência. Formato: data | etapa | ocorrência | causa | correç
 | 30/10 | R7e | qwen3.8:27b baixado com sucesso no Ollama 0.40.14 (16 GB + 931 MB de visao) | , | Teste de ferramentas e de tempo com LLM_PENSAR=false |
 | 05/11 | R7g | Removidos jurema-7b, copia hf.co do Jurema, Spark BF16 e o alias Spark-X2.6-4B-Q8; D-04 substituida; D-17 aberta; modelo padrao provisorio: Spark q8_0 | , | Registro e justificativa em docs/MODELOS.md; OLLAMA_MAX_LOADED_MODELS=1 |
 | 05/11 | R7g | Removidos jurema-7b, copia hf.co do Jurema, Spark BF16 e o alias Spark-X2.6-4B-Q8; D-04 substituida; D-17 aberta; modelo padrao provisorio: Spark q8_0 | , | Registro e justificativa em docs/MODELOS.md; OLLAMA_MAX_LOADED_MODELS=1 |
+| 07/11 | R7i | Tentativa de quantizar o 27B: llama-quantize falhou (qwen35 nao suportado no build 4400); o modelo ja e Q4_K_M | , | Quantizacao manual descartada; alias enganoso e copia de 16,8 GB removidos; D-17 com etapa B de quantizacao |

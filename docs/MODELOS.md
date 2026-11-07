@@ -16,3 +16,11 @@
 | qwen3.8:27b (Q4_K_M) | instalado | referencia de qualidade, fora do uso interativo |
 
 Fora da comparacao: Qwen3.8-27B FP8 (exige GPU grande e vLLM ou Transformers; nao roda no Ollama em CPU, e o Q4_K_M ja esta instalado).
+
+## Removidos em 07/11/2026 (limpeza do 27B)
+| Item | Motivo | Espaco liberado |
+|---|---|---|
+| alias qwen2.5-27b:instruct | Nome enganoso: nao existe Qwen2.5 de 27B; era o qwen3.8:27b | 0 (arquivos compartilhados) |
+| C:\Modelos\qwen-base.gguf | Copia do arquivo do Ollama, criada para quantizar manualmente | 16,8 GB |
+
+Quantizacao manual do 27B descartada: o qwen3.8:27b do Ollama ja e Q4_K_M; um Q5_K_M a partir dele seria requantizacao, sem ganho de qualidade; o llama.cpp local (build 4400) nao reconhece a arquitetura qwen35. Um Q5_K_M so seria valido se baixado pronto, e o 27B e apenas modelo de referencia.
